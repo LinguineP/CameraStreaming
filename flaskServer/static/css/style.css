@@ -1,0 +1,52 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    height: 100%;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#player {
+    width: 80%;
+    height: 95vh;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+h2 {
+    text-align: center;
+    color: #4285f4; 
+    font-size: 40px;
+}
+
+#pic {
+    width: 80%;
+    max-height: 65%; 
+    object-fit: contain;
+    margin-top: auto;
+    margin-bottom: 30px; 
+    
+}
+
+#outputContainer {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.outputText {
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    margin: 0; /* Remove default margin for better centering */
+}
