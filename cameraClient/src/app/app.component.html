@@ -1,0 +1,24 @@
+<div>
+  
+    
+    <div class="container">
+        <div id="nav" >  
+            <div class="pageNavButtons" id="monitoring" 
+                [routerLink]="['/']" 
+                routerLinkActive="router-link-active" 
+                [routerLinkActiveOptions]="{exact:true}">
+                Stream
+            </div>
+            <div class="pageNavButtons" 
+                id="settngs"  [routerLink]="['/settings']" 
+                 routerLinkActive="router-link-active">
+                Settings
+            </div>     
+        </div>  
+  
+        <div id="content" >  
+            <router-outlet></router-outlet>
+        </div>  
+    </div>
+
+</div>  

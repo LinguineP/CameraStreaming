@@ -6,12 +6,14 @@ import numpy as np
 import base64
 import logging
 import pkg_resources
+from flask_cors import CORS
 #log = logging.getLogger('werkzeug')
 #log.setLevel(logging.ERROR)
 #from flask_sslify import SSLify
 
 app = Flask(__name__)
 #sslify = SSLify(app)
+CORS(app)
 
 
 
@@ -70,7 +72,7 @@ class DetectionStats:
     def __init__(self) -> None:
         self.presentHumans:bool=False;
         self.NotifyFlag:bool=False;
-        self.doDetectionFlag=True;
+        self.doDetectionFlag=False;
     def getHumanPresent(self)->bool:
         return self.presentHumans
     def setHumanPresent(self,presentHumans)->None:
@@ -216,5 +218,6 @@ def listen():
 
 if __name__ == '__main__':
     #app.run(ssl_context='adhoc')
-    app.run()
+    app.run(host='localhost', port=7777)
+    #app.run(host='0.0.0.0', port=7777)
     

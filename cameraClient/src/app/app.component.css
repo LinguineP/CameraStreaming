@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh; /* Set the height of the body to 100% of the viewport height */
+  }
+  
+  .container {
+    background-color: #fffefe;
+    display: flex;
+    height: 100vh; /* Use viewport height to fill the entire screen */
+    width: 100%;   /* Occupy the full width of the viewport */
+    box-sizing: border-box;
+  }
+  
+  .pageNavButtons {
+    font-family: 'Roboto', sans-serif;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    height: 50dvh;
+    border: none;
+    border-top-right-radius: 10px ;
+    border-bottom-right-radius: 10px ;
+    flex-grow: 1;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #2a04e4;
+    color: #fffefe;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Make the navigation links stack vertically */
+  }
+  
+
+  .router-link-active {
+    font-family: 'Roboto', sans-serif;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    height: 50dvh;
+    border:2px;
+    border-left: 0;
+    border-color:#2a04e4;
+    border-style:solid;
+    border-top-right-radius: 10px ;
+    border-bottom-right-radius: 10px ;
+    flex-grow: 1;
+    font-size: 14px;
+    font-weight: 750;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #fffefe;
+    color: #2a04e4;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Make the navigation links stack vertically */
+  }
+  
+  
+  #content {
+    flex-grow: 1;
+    width: 90%;
+    height: 100dvh;
+    padding: 20px;
+    background-color: #fffefe;
+    box-sizing: border-box;
+  }
+  

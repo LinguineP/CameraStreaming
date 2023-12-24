@@ -51,7 +51,7 @@ def postImg():
 
        # b=time.time();
         try:
-            requests.post('http://localhost:5000/img_in',json=imgjson,timeout=0.1)
+            requests.post('http://localhost:7777/img_in',json=imgjson,timeout=0.1)
         except requests.exceptions.ReadTimeout: 
             pass
         
