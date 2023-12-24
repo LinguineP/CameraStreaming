@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import base64
 import logging
+import pkg_resources
 #log = logging.getLogger('werkzeug')
 #log.setLevel(logging.ERROR)
 #from flask_sslify import SSLify
@@ -67,12 +68,23 @@ dlstatus=DoorLockStatus()
 
 class DetectionStats:
     def __init__(self) -> None:
-        self.humanNumber:int=0;
+        self.presentHumans:bool=False;
         self.NotifyFlag:bool=False;
-    def getHumanNumber(se)->str:
-        return self.humanNumber
-    def setHumanNumber(self,numberOfHumans)->None:
-        self.humanNumber=numberOfHumans
+        self.doDetectionFlag=True;
+    def getHumanPresent(self)->bool:
+        return self.presentHumans
+    def setHumanPresent(self,presentHumans)->None:
+        self.presentHumans=presentHumans
+    def getNotify(self)->bool:
+        return self.presentHumans
+    def setNotify(self,presentHumans)->None:
+        self.presentHumans=presentHumans
+    def getDetect(self)->bool:
+        return self.doDetectionFlag
+    def setDetect(self,detect)->None:
+        self.doDetectionFlag=detect
+
+
 
 detStats=DetectionStats()
 #######################################################################
@@ -100,36 +112,71 @@ def format_sse(data:any, event=None,type:str='json') -> str:
         
 #######################################################################   
          
-hog = cv2.HOGDescriptor()
-hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-def detectPerson(inImg):
+upperbody_xml = pkg_resources.resource_filename(
+    'cv2', 'data/haarcascade_upperbody.xml')         
+upperBody_cascade = cv2.CascadeClassifier(upperbody_xml) 
+#___________________________________________________________
+profileface_xml = pkg_resources.resource_filename(
+    'cv2', 'data/haarcascade_profileface.xml')         
+profileFace_cascade = cv2.CascadeClassifier(profileface_xml) 
+#___________________________________________________________
+frontalface_xml = pkg_resources.resource_filename(
+    'cv2', 'data/haarcascade_frontalcatface_extended.xml')         
+frontalFace_cascade = cv2.CascadeClassifier(profileface_xml) 
+
+cascadeList=[upperBody_cascade,frontalFace_cascade,profileFace_cascade]
+   
+
+def CascadeClassify(classifier,img):
+    arrUpperBody = classifier.detectMultiScale(img)
+  
+    for (x,y,w,h) in arrUpperBody:
+        cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+        if (w*h)!=0:
+            detStats.setHumanPresent(True)
+    return img
+
+
+
+def detect(inImg):
     
     imgBytesIn = base64.b64decode(inImg)
     imgArrIn = np.frombuffer(imgBytesIn, dtype=np.uint8)  
-    image = cv2.imdecode(imgArrIn, flags=cv2.IMREAD_COLOR)
-    (humans, _) = hog.detectMultiScale(image, winStride=(10, 10),padding=(32, 32), scale=1.1)
+    img = cv2.imdecode(imgArrIn, flags=cv2.IMREAD_COLOR)
+    detStats.setHumanPresent(False)
 
-    # getting no. of human detected
-    #print('Human Detected : ', len(humans))
-    detStats.setHumanNumber(len(humans))
+    for cascade in cascadeList:
+        img=CascadeClassify(cascade,img)
+        if detStats.getHumanPresent():
+            break
 
-    # loop over all detected humans
-    for (x, y, w, h) in humans:
-        pad_w, pad_h = int(0.15 * w), int(0.01 * h)
-        cv2.rectangle(image, (x + pad_w, y + pad_h), (x + w - pad_w, y + h - pad_h), (0, 255, 0), 2)
+    
+        
 
-    _, imgArr = cv2.imencode('.jpg', image)  # im_arr: image in Numpy one-dim array format.
+    _, imgArr = cv2.imencode('.jpg', img)  
     imgData= base64.b64encode(imgArr).decode('ascii')
     return imgData
 
 
 #######################################################################
+skip1=False;
+
 @app.route('/img_in',methods=['post'])
 def img_in():
     data:dict = json.loads(request.get_json())
-
-    processedImg=   data['img']
+    global skip1
+    if detStats.getDetect():
+        if skip1:
+            processedImg= detect(data['img']);    
+        else:
+            processedImg= data['img'];    
+        
+        skip1=not skip1
+    else:
+        processedImg= data['img'];
+        
+    
     
     data_out = format_sse(data=processedImg,event="frame")
     announcer.announce(msg=data_out)

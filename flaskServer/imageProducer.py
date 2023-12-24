@@ -39,7 +39,7 @@ def detectPerson(inImg):
 def get_img():
     ret, frame = captureDev.read()    
     #return im2json(frame)
-    return detectPerson(frame)
+    return im2json(frame)
 
 
 
