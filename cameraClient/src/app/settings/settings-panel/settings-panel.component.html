@@ -1,1 +1,39 @@
 
+<div> 
+    <table>   
+        <tbody>
+            <tr>
+                <td>
+                    <p>Detection:</p>
+                </td>
+                <td>
+                    <div class="toggleContainer">
+                        <div class="toggle"  
+                            [ngClass]="detectionFlag ? 'toggleOn' : 'toggleOff'"
+                            (click)="toggleEvent($event,'detection')">
+                                <div   [ngClass]="detectionFlag ? 'toggleBallOn' : 'toggleBallOff'">
+                                
+                                </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Alarm armed:</p>
+                </td>
+                <td> 
+                    <div class="toggleContainer">
+                        <div class="toggle"  
+                            [ngClass]="alarmFlag ? 'toggleOn' : 'toggleOff'"
+                            (click)="toggleEvent($event,'alarm')">
+                                <div   [ngClass]="alarmFlag ? 'toggleBallOn' : 'toggleBallOff'">
+                                
+                                </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

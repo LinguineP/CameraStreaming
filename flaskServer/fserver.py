@@ -72,7 +72,7 @@ class DetectionStats:
     def __init__(self) -> None:
         self.presentHumans:bool=False;
         self.NotifyFlag:bool=False;
-        self.doDetectionFlag=False;
+        self.doDetectionFlag:bool=False;
     def getHumanPresent(self)->bool:
         return self.presentHumans
     def setHumanPresent(self,presentHumans)->None:
@@ -185,12 +185,36 @@ def img_in():
 
     return {"responseStatus":"ok",
             "responseHeader":{
-            "status":"ok",
+            "status":"ok"
              }}, 200
 
 #######################################################################
 
-@app.route('/sensor_data',methods=['post'])
+@app.route('/settings',method=['GET','PUT'])
+def settings():
+    if request.method == 'GET':
+        data=request.get_json()
+        if 'detect' in data:
+            detStats.setDetect(data['detect'])
+        if 'notify' in data:
+            detStats.setNotify(data['notify'])
+        return {"responseStatus":"ok",
+            "responseHeader":{
+            "status":"ok",
+            "detection": detStats.getDetect(),
+            "notify": detStats.getNotify()
+             }}, 200
+    elif request.method == 'PUT':
+        return {"responseStatus":"ok",
+            "responseHeader":{
+            "status":"ok",
+            "detection": detStats.getDetect(),
+            "notify": detStats.getNotify()
+             }}, 200
+
+
+
+@app.route('/sensor_data',methods=['POST'])
 def sensor_data():
     data = request.get_json()
     if data.keys() >= {"lock", "door"}:

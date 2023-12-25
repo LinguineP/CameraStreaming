@@ -15,7 +15,7 @@ export class SettingsComponent {
     }
 
     goToSettingsPanel() {
-      this.router.navigate( ['/settings','settings-panel']);
+      this.router.navigate( ['settings-panel'],{relativeTo:this.route});
       
     }
 

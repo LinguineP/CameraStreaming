@@ -6,7 +6,7 @@ import { SettingsPanelComponent } from './settings/settings-panel/settings-panel
 export const routes: Routes = [
     {path:'',component:MonitoringComponent},
     {path:'settings',component:SettingsComponent, children: [
-        {path: 'settings-panel',component: SettingsPanelComponent,outlet:"settingsRouterOutlet" }
+        {path: 'settings-panel',component: SettingsPanelComponent }
       ]}
  
     
