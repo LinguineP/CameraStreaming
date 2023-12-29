@@ -1,5 +1,5 @@
 export const environment = 
 {
     production: false,
-    API_URL: 'http://localHost:7777',
+    API_URL: 'http://127.0.0.1:7777',
 };

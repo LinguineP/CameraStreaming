@@ -12,7 +12,6 @@
                             [ngClass]="detectionFlag ? 'toggleOn' : 'toggleOff'"
                             (click)="toggleEvent($event,'detection')">
                                 <div   [ngClass]="detectionFlag ? 'toggleBallOn' : 'toggleBallOff'">
-                                
                                 </div>
                         </div>
                     </div>
@@ -36,4 +35,46 @@
             </tr>
         </tbody>
     </table>
+    <div>
+    <h2>Change mail to send</h2>
+        <form [formGroup]="emailForm" (ngSubmit)="submitForm()">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="email"><p>Email:</p></label>                
+                        </td>
+                        <td>
+                            <input autocomplete="off" type="email" id="email" formControlName="email">                
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="password"><p>Auth:</p></label>
+                        </td>
+                        <td>
+                            <input type="password" id="auth" formControlName="auth">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit"  class="btn btn-primary wide-btn" [disabled]="!emailForm.valid">Submit</button>
+                        </td>
+                        <td>  
+                        </td>
+                    </tr>
+                    <br>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" class="btn btn-primary wide-btn" (click)="sendEmail()">sendEmail</button>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+        
+    </div>
+
 </div>
