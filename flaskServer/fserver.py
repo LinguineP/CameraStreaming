@@ -49,7 +49,7 @@ class EmailSender:
         self.smtp_username = "helloWorldFromSrv@gmail.com"
         self.file_path = './pass.txt'  # Replace with the actual file path
         self.file_content = read_text_from_file(self.file_path)
-        self.smtp_password = 'seuq utdl niuv aqlu'
+        self.smtp_password = ''
         self.serverIP=None
 
         
